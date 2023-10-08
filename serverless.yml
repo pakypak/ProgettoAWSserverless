@@ -6,6 +6,7 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs18.x
+# Impostazione permessi delle funzioni
   iam:
       role:
         statements:
@@ -17,23 +18,27 @@ provider:
               - 'dynamodb:UpdateItem'
               - 'dynamodb:DeleteItem'
             Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-customerTable-${sls:stage}
+# Rendere disponibile il nome della tabella            
   environment:
     DYNAMODB_CUSTOMER_TABLE: ${self:service}-customerTable-${sls:stage}
-
+# Aggiunta endpoint
 functions:
+# Nome funzione specifica
   createCustomer:
+# Dove risiede il codice della funzione
     handler: createCustomer.createCustomer
     events:
       - httpApi:
           path: /
           method: post
+# Aggiunta edpoint GET          
   getCustomers:
     handler: getCustomers.getCustomers
     events:
       - httpApi:
           path: /customers
           method: get
-
+# database dynamo DB
 resources:
   Resources:
     CustomerTable:
@@ -48,7 +53,7 @@ resources:
             KeyType: HASH
         TableName: ${self:service}-customerTable-${sls:stage}
 
-
+# Aggiunta endpoint POST
 function:
 createCustomer:
   handler: createCustomer.createCustomer

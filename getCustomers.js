@@ -1,3 +1,4 @@
+    // Funzione getCustomers
     'use strict';
     const AWS = require('aws-sdk');
 

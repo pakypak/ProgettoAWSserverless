@@ -1,3 +1,4 @@
+// Creazione nuovo file
 'use strict';
 const AWS = require('aws-sdk');
 
